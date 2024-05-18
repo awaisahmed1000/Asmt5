@@ -17,7 +17,7 @@ let firstName = "Awais";
 let lastName = "Ahmed";
 let fullName = `${firstName} ${lastName}`;
 console.log(fullName);
-//5. 5 greater than 3?
+//5. Is 5 greater than 3?
 if (5 > 3) {
     console.log("Yes");
 }
@@ -120,26 +120,28 @@ function reverseArray(givenArray) {
 ;
 console.log(reverseArray([1, 2, 3, 4, 5, 6, 7, 8, 9]));
 //15. function that logs the number of times the score exceeds max score and it fell below min score
-function countExceedingAndFalling(scores) {
+function maxAndMinScore(scores) {
+    let scoreExceedsMax = 0;
+    let scoreFallsBelowMin = 0;
     let maxScore = scores[0];
     let minScore = scores[0];
-    let exceedingCount = 0;
-    let fallingCount = 0;
-    for (let i = 1; i < scores.length; i++) {
+    for (let i = 0; i < scores.length; i++) {
         if (scores[i] > maxScore) {
+            scoreExceedsMax++;
             maxScore = scores[i];
-            exceedingCount++;
         }
-        if (scores[i] < minScore) {
+        else if (scores[i] < minScore) {
+            scoreFallsBelowMin++;
             minScore = scores[i];
-            fallingCount++;
         }
+        ;
     }
-    console.log(exceedingCount);
-    console.log(fallingCount);
+    ;
+    console.log("No of Times Score exceeds max: " + scoreExceedsMax);
+    console.log("No of Times Score exceeds min: " + scoreFallsBelowMin);
 }
 ;
-countExceedingAndFalling([10, 5, 20, 20, 4, 5, 2, 25, 1]);
+maxAndMinScore([10, 5, 20, 20, 4, 5, 2, 25, 1]);
 //16. function to remove all falsey values from an array (false, null, 0, "", undefined and NaN)
 function removeFalseyValues(arr) {
     return (arr.filter(Boolean));
@@ -152,20 +154,28 @@ let arr2 = [4, 5, 6];
 let concatArray = arr1.concat(arr2);
 console.log(concatArray);
 //18. function sumOfElements to calculate the sum of all elements in an array that are either even or odd , based on a parameter
-function sumOfElements(arr, type) {
-    let sum = 0;
-    for (let i = 0; i < arr.length; i++) {
-        if ((type === 'even' && arr[i] % 2 === 0) || (type === 'odd' && arr[i] % 2 !== 0)) {
-            sum += arr[i];
+function sumOfElements(numbersArray, evenOrOdd) {
+    let EvenArray = [];
+    let oddArray = [];
+    for (let i = 0; i < numbersArray.length; i++) {
+        if (evenOrOdd == "Even" && numbersArray[i] % 2 == 0) {
+            EvenArray.push(numbersArray[i]);
         }
-        ;
+        else if (evenOrOdd == "Odd" && numbersArray[i] % 2 != 0) {
+            oddArray.push(numbersArray[i]);
+        }
     }
     ;
-    return sum;
+    if (evenOrOdd == "Even") {
+        console.log("Even Sum: " + EvenArray.reduce((a, b) => a + b));
+    }
+    else if (evenOrOdd == "Odd") {
+        console.log("odd Sum: " + oddArray.reduce((a, b) => a + b));
+    }
+    ;
 }
 ;
-console.log(sumOfElements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 'even'));
-console.log(sumOfElements([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 'odd'));
+sumOfElements([1, 2, 3, 4, 5, 6, 7, 8, 9], "Odd");
 //19. function to check if an element exists in an array. If exists, return the index of element, otherwise return -1
 function elementExistOrNot(element, givenArray) {
     let returnValue;
@@ -220,22 +230,20 @@ function filterByLength(arrayOfStrings, n) {
 ;
 console.log(filterByLength(["Awais Ahmed", "Ali", "Raza Sohail", "Faris Ali"], 8));
 //23. function "findDuplicates" that finds and logs all duplicates in an array
-function findDuplicates(arr) {
-    let duplicates = [];
-    let result = [];
-    for (let i = 0; i < arr.length; i++) {
-        if (duplicates[arr[i]] !== undefined) {
-            if (!result.includes(arr[i])) {
-                result.push(arr[i]);
-            }
+function findDuplicates(duplicateArray) {
+    let checkedElements = [];
+    for (let i = 0; i < duplicateArray.length; i++) {
+        let newArray = duplicateArray.slice(i + 1, duplicateArray.length);
+        if (newArray.includes(duplicateArray[i]) && !(checkedElements.includes(duplicateArray[i]))) {
+            checkedElements.push(duplicateArray[i]);
+            console.log("Duplicate Element: " + duplicateArray[i]);
         }
-        else {
-            duplicates[arr[i]] = true;
-        }
+        ;
     }
-    console.log(result);
+    ;
 }
-findDuplicates([1, 2, 3, 4, 2, 5, 6, 5, 7, 8, 9, 1]);
+;
+findDuplicates([8, 1, 1, 1, 2, 3, 5, 8, 1, 9, 6, 4, 2, 8, 9]);
 //24. function  incrementAll that takes an array of integers and increments each element by 1.
 function incrementAll(numbersArray) {
     let newArray = [];
@@ -248,26 +256,59 @@ function incrementAll(numbersArray) {
 ;
 console.log(incrementAll([0, 50, 20, 341, 45, 500]));
 //25. function countOfOccurrances that counts how many types a specific element apprears in an array
-function countOccurrences(arr, element) {
-    let count = 0;
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === element) {
-            count++;
+function countOfOccurrances(elementArray, element) {
+    let countofElement = 0;
+    for (let i = 0; i < elementArray.length; i++) {
+        if (elementArray[i] == element) {
+            countofElement++;
         }
+        ;
     }
-    return count;
+    ;
+    return countofElement;
 }
-console.log(countOccurrences([1, 2, 3, 4, 2, 5, 6, 5, 7, 8, 9, 1], 5));
+;
+console.log(countOfOccurrances([1, 2, 88, 9, 5, 1, "Awais", 2, "Awais", 88], "Awais"));
 //26. function isSorted to check if an array is sorted in ascending order
-function isSorted(arr) {
-    for (let i = 1; i < arr.length; i++) {
-        if (arr[i] < arr[i - 1]) {
-            return false;
+function isSorted(givenArray) {
+    let sortedOrNot = "";
+    for (let i = 0; i < givenArray.length; i++) {
+        if (givenArray[i] <= givenArray[i + 1]) {
+            sortedOrNot = "Array is Sorted";
         }
+        else if (givenArray[i] > givenArray[i + 1]) {
+            sortedOrNot = "Array is not sorted";
+            break;
+        }
+        ;
     }
-    return true;
+    ;
+    return sortedOrNot;
 }
-console.log(isSorted([1, 2, 3, 4, 5]));
+;
+console.log(isSorted([1, 2, 3, 4, 5, 5, 6, 7, 8, 1]));
+//27. function that receives an array and formats them into a string separated by commas, except for the last two names, which should be separated by "and"
+function arraytoString(arrayOfNames) {
+    let stringFromArray = "";
+    for (let i = 0; i < arrayOfNames.length; i++) {
+        if (i < (arrayOfNames.length - 2)) {
+            stringFromArray = stringFromArray.concat(arrayOfNames[i], ",");
+            console.log(arrayOfNames[i] + ",");
+        }
+        else if (i == (arrayOfNames.length - 2)) {
+            stringFromArray = stringFromArray.concat(arrayOfNames[i]);
+        }
+        else if (i > (arrayOfNames.length - 2)) {
+            stringFromArray = stringFromArray.concat(" and ", arrayOfNames[i]);
+            console.log(arrayOfNames[i] + ",");
+        }
+        ;
+    }
+    ;
+    return stringFromArray;
+}
+;
+console.log(arraytoString(["Awais", "Ahmed", "Ali", "Hamza", "Umer", "Sehban", "Ismail"]));
 //28. function that converts an array of fahrenheit temp to celcius and logs new temp
 function fahrenheitToCelciusTemp(fahrenheitTempArray) {
     for (let i = 0; i < fahrenheitTempArray.length; i++) {
@@ -277,6 +318,28 @@ function fahrenheitToCelciusTemp(fahrenheitTempArray) {
 }
 ;
 fahrenheitToCelciusTemp([99, 98, 95, 100, 100.5]);
+//29 function minMaxAverage that takes an array of numbers and returns an object with properties for min, max and average of those numbers
+function minMaxAverage(arrayOfNumbers) {
+    let minNumber = Number.POSITIVE_INFINITY;
+    let maxNumber = Number.NEGATIVE_INFINITY;
+    let sumOfNumbers = 0;
+    for (let i = 0; i < arrayOfNumbers.length; i++) {
+        sumOfNumbers = sumOfNumbers + arrayOfNumbers[i];
+        if (arrayOfNumbers[i] > maxNumber) {
+            maxNumber = arrayOfNumbers[i];
+        }
+        if (arrayOfNumbers[i] < minNumber) {
+            minNumber = arrayOfNumbers[i];
+        }
+        ;
+    }
+    ;
+    console.log("Max Number: " + maxNumber);
+    console.log("Min Number: " + minNumber);
+    console.log("Average of Numbers: " + ((sumOfNumbers) / (arrayOfNumbers.length)));
+}
+;
+console.log(minMaxAverage([1, 3, 4, 8, 9, 200, 8, 6, -9, 100]));
 //30. function swapElements that swaps two specified indices in an array.
 function swapElements(myCurrentArray, index1st, index2nd) {
     [myCurrentArray[index1st], myCurrentArray[index2nd]] = [myCurrentArray[index2nd], myCurrentArray[index1st]];
@@ -290,6 +353,46 @@ function characterFrequencyInString(stringValue, characterValue) {
 }
 ;
 console.log(characterFrequencyInString("qdlhhqed,qdhoqodh.wkqw,dlq,wdn.jnwd,,", ","));
+//32. create a 'to-do list' array of objects where each object has properties task and completed (a boolean). Write a function 
+//to log only the tasks that are not yet completed.
+let toDoList = [
+    {
+        task: "task1",
+        completed: true,
+    },
+    {
+        task: "task2",
+        completed: false,
+    },
+    {
+        task: "task3",
+        completed: false,
+    },
+    {
+        task: "task4",
+        completed: true,
+    },
+    {
+        task: "task5",
+        completed: false,
+    },
+];
+function tasksNotYetCompleted() {
+    for (let i = 0; i < toDoList.length; i++) {
+        if (toDoList[i].completed == false) {
+            console.log(`The task ${toDoList[i].task} is not yet completed.`);
+        }
+        ;
+    }
+    ;
+}
+;
+console.log(tasksNotYetCompleted());
+//33. function that takes an array of integers and sorts them from smallest to largest.
+function sortArray(unSortedArray) {
+    return unSortedArray.sort((a, b) => a - b);
+}
+console.log(sortArray([1, 8, 99, 56, 7, 2]));
 //34. typescript program that logs every element of an array in reverse order without using .reverse() method
 function orderReverse(inputArray) {
     let outputArray = [];
@@ -301,3 +404,30 @@ function orderReverse(inputArray) {
 }
 ;
 console.log(orderReverse(["Cloud", "Rain", "Umbrella"]));
+//35  Write a script that simulates a basic calculator. It should take two operands and an operator ('+', '-', '*', '/') from 
+//the user, perform the operation, and log the result.
+function basicCalculator(operand1, operand2, operator) {
+    let answer;
+    if (operator == "+") {
+        answer = operand1 + operand2;
+    }
+    else if (operator == "-") {
+        answer = operand1 - operand2;
+    }
+    else if (operator == "*") {
+        answer = operand1 * operand2;
+    }
+    else if (operator == "/") {
+        answer = operand1 / operand2;
+    }
+    else if (operator == "**") {
+        answer = operand1 ** operand2;
+    }
+    else if (operator == "%") {
+        answer = operand1 % operand2;
+    }
+    ;
+    return answer;
+}
+;
+console.log(basicCalculator(8, 2, "**"));
